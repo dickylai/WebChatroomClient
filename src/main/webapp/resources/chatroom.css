@@ -1,0 +1,22 @@
+#message-container {
+   padding-right: 15px;
+   padding-left: 15px;
+   overflow-y: scroll;
+   height: 500px;
+} 
+
+.container {
+	height:100%;
+}
+
+.header-area {
+	height:20%;
+}
+
+.message-input-area {
+	height:10%;
+}
+
+.message-container-area {
+	height:70%;
+}
