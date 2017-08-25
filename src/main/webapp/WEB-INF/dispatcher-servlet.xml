@@ -2,19 +2,29 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/websocket
+	http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:annotation-driven />
-	
+
 	<context:component-scan base-package="com.webchatboxserver.controller" />
 
+	<websocket:message-broker application-destination-prefix="/webchatboxclient">
+		<websocket:stomp-endpoint path="/chatroom">
+			<websocket:sockjs />
+		</websocket:stomp-endpoint>
+		<websocket:simple-broker prefix="/topic" />
+	</websocket:message-broker>
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -26,7 +36,7 @@
 	<bean id="userRegistrator" class="com.webchatboxserver.model.UserRegistrator" />
 	<bean id="roomRegistrator" class="com.webchatboxserver.model.RoomRegistrator" />
 	<bean id="roomUserValidator" class="com.webchatboxserver.model.RoomUserValidator" />
-	
+
 	<bean class="com.webchatboxserver.controller.WebController" />
 
 </beans>
